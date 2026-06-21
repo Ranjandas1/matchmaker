@@ -1,0 +1,20 @@
+node_modules
+.next
+out
+
+# Bun specific
+.bun
+
+.env
+.env.*
+!.env.example
+
+.git
+.gitignore
+.github
+
+README.md
+Dockerfile
+docker-compose.yml
+
+.DS_Store

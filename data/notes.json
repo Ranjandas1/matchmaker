@@ -1,0 +1,16 @@
+{
+  "1": {
+    "stage": "Onboarding",
+    "notes": []
+  },
+  "20": {
+    "stage": "Intro Sent",
+    "notes": [
+      {
+        "id": "917f4945-14c5-474d-ae13-db4ba2793ec4",
+        "text": "[Match Proposal Sent] Sent match proposal to Nidhi Naik (ID: 62). Score: 64%.\n\nEmail Content sent:\nSubject: Match Proposal: Meet Nidhi - A great potential match!\n\n    Hi Tarun,\n\n    I hope you're doing well! I've been reviewing profiles in our verified pool and I have found a profile that stood out as an excellent match for you.\n\n    Meet Nidhi (26, living in Jaipur). She is a Brand Manager at KPMG and has completed her B.Tech from Miranda House. \n\n    Why we think this could work:\n    - You both are based in or open to relocation.\n    - Aligned preferences: Tarun (Jain) and Nidhi (Parsi) both value moderate traditions.\n    - Shared lifestyle: You both are non-vegetarian and enjoy activities like music, photography.\n\n    Let me know if you would like me to share your profile with Nidhi and coordinate an introductory call!\n\n    Best regards,\n    Your TDC Matchmaker",
+        "createdAt": "2026-06-21T14:43:59.515Z"
+      }
+    ]
+  }
+}
