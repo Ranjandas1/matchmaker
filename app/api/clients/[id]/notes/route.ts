@@ -1,39 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs/promises";
-import path from "path";
 import crypto from "crypto";
-
-const NOTES_FILE = path.join(process.cwd(), "data", "notes.json");
-
-interface Note {
-  id: string;
-  text: string;
-  createdAt: string;
-}
-
-interface ClientState {
-  stage: string;
-  notes: Note[];
-}
-
-interface NotesDB {
-  [clientId: string]: ClientState;
-}
-
-async function readDB(): Promise<NotesDB> {
-  try {
-    const data = await fs.readFile(NOTES_FILE, "utf-8");
-    return JSON.parse(data);
-  } catch (error) {
-    return {};
-  }
-}
-
-async function writeDB(db: NotesDB) {
-  // Ensure the directory exists
-  await fs.mkdir(path.dirname(NOTES_FILE), { recursive: true });
-  await fs.writeFile(NOTES_FILE, JSON.stringify(db, null, 2), "utf-8");
-}
+import { readNotesDB, writeNotesDB, type Note } from "@/lib/notes-store";
 
 export async function GET(
   _req: NextRequest,
@@ -41,7 +8,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const db = await readDB();
+    const db = await readNotesDB();
 
     // Default values if no entry exists
     const clientState = db[id] || {
@@ -50,7 +17,7 @@ export async function GET(
     };
 
     return NextResponse.json(clientState);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error reading client notes:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
@@ -68,7 +35,7 @@ export async function POST(
     const body = await req.json();
     const { stage, noteText } = body;
 
-    const db = await readDB();
+    const db = await readNotesDB();
     const clientState = db[id] || {
       stage: "Onboarding",
       notes: [],
@@ -88,10 +55,10 @@ export async function POST(
     }
 
     db[id] = clientState;
-    await writeDB(db);
+    await writeNotesDB(db);
 
     return NextResponse.json(clientState);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error writing client notes:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },

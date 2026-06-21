@@ -3,20 +3,8 @@ import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { getMatchesForClient } from "@/lib/matchmaker";
 import { ClientDetails } from "@/components/client-details";
-import fs from "fs/promises";
-import path from "path";
 import { data } from "@/data/profiles";
-
-const NOTES_FILE = path.join(process.cwd(), "data", "notes.json");
-
-async function getNotesDB() {
-  try {
-    const data = await fs.readFile(NOTES_FILE, "utf-8");
-    return JSON.parse(data);
-  } catch (error) {
-    return {};
-  }
-}
+import { readNotesDB } from "@/lib/notes-store";
 
 export default async function ClientDetailedPage({
   params,
@@ -45,7 +33,7 @@ export default async function ClientDetailedPage({
 
   const matches = getMatchesForClient(client);
 
-  const db = await getNotesDB();
+  const db = await readNotesDB();
   const stringId = String(client.id);
   const clientState = db[stringId] || {
     stage:

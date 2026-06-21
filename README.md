@@ -31,9 +31,11 @@ NEXTAUTH_SECRET=your_nextauth_secret_here
 NEXTAUTH_URL=http://localhost:3000
 NEXT_PUBLIC_USER_EMAIL=
 NEXT_PUBLIC_USER_PASSWORD=
+NOTES_FILE_PATH=
 ```
 
 `OPENAI_API_KEY` is optional for local testing. If it is missing, the app still runs and uses a local rule-based fallback for AI intro generation.
+`NOTES_FILE_PATH` is optional. By default, notes are saved to `data/notes.json` locally and `/tmp/matchmaker-notes.json` in production.
 
 Start the development server:
 
@@ -112,4 +114,9 @@ The AI response is validated as JSON before it is returned to the UI. If the API
 ## Assumptions
 
 Profiles are assumed to be pre-verified and available from local seed data. Gender and relationship preferences are simplified to match the fields in `UserProfile`. The score is designed to assist a human matchmaker, not automatically decide whether two people should connect. This is a prototype, so notes are stored locally in `data/notes.json` instead of a production database.
-# matchmaker
+
+## Production Notes Storage
+
+The notes feature writes to a JSON file for prototype simplicity. Local development uses `data/notes.json`. Production defaults to `/tmp/matchmaker-notes.json` because many hosts do not allow writes to the deployed project folder. This can make notes work during a running production instance, but `/tmp` storage may be temporary depending on the hosting provider.
+
+For real production persistence, use a database or a persistent mounted volume and set `NOTES_FILE_PATH` to that writable path.
