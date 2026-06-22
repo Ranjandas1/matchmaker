@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import crypto from "crypto";
 import { readNotesDB, writeNotesDB, type Note } from "@/lib/notes-store";
 
@@ -56,6 +57,8 @@ export async function POST(
 
     db[id] = clientState;
     await writeNotesDB(db);
+    revalidatePath("/dashboard");
+    revalidatePath(`/clients/${id}`);
 
     return NextResponse.json(clientState);
   } catch (error: unknown) {

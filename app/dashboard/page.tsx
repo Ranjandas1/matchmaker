@@ -3,21 +3,8 @@ import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 // import { getExpandedProfiles } from "@/lib/matchmaker";
 import { DashboardClient } from "@/components/dashboard-client";
-import fs from "fs/promises";
-import path from "path";
 import { data } from "@/data/profiles";
-
-const NOTES_FILE = path.join(process.cwd(), "data", "notes.json");
-
-// Helper to load notes database
-async function getNotesDB() {
-  try {
-    const data = await fs.readFile(NOTES_FILE, "utf-8");
-    return JSON.parse(data);
-  } catch (error) {
-    return {};
-  }
-}
+import { readNotesDB } from "@/lib/notes-store";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -28,14 +15,10 @@ export default async function DashboardPage() {
 
   // Load profiles from the algorithm core
   const allProfiles = data;
-
-  // Designate the first 5 males (IDs 1-5) and the first 5 females (IDs 51-55) as assigned clients
-  // const assignedIds = [1, 2, 3, 4, 5, 51, 52, 53, 54, 55];
-  // const clients = allProfiles.filter(p => assignedIds.includes(p.id));
   const clients = allProfiles;
 
   // Load persistence states
-  const db = await getNotesDB();
+  const db = await readNotesDB();
 
   // Merge client details with their persistent stage and notes count
   const clientsWithJourney = clients.map((client) => {

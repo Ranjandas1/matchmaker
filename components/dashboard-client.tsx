@@ -128,7 +128,7 @@ export function DashboardClient({
             </div>
             <button
               onClick={() => signOut({ callbackUrl: "/login" })}
-              className="flex items-center gap-2 px-4 py-2 text-xs font-semibold tracking-wider text-destructive hover:bg-destructive hover:text-destructive-foreground border border-destructive/20 hover:border-destructive rounded-lg transition-all duration-200 cursor-pointer"
+              className="flex items-center gap-2 px-4 py-2 text-xs font-semibold tracking-wider border border-destructive/20 rounded-lg cursor-pointer transition-colors duration-200 text-destructive hover:bg-destructive hover:text-black hover:border-destructive"
             >
               <LogOut className="w-4 h-4" />
               <span className="hidden sm:inline">Logout</span>
@@ -311,7 +311,7 @@ export function DashboardClient({
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {filteredClients.map((client) => (
-              <Link href={`/clients/${client.id}`}>
+              <Link key={client.id} href={`/clients/${client.id}`}>
                 <div
                   key={client.id}
                   className="group relative overflow-hidden bg-card text-card-foreground border border-border hover:border-primary/50 rounded-2xl p-5 transition-all duration-300 hover:shadow-md flex flex-col justify-between"
@@ -413,13 +413,10 @@ export function DashboardClient({
                         </span>
                       )}
 
-                      <Link
-                        href={`/clients/${client.id}`}
-                        className="flex items-center gap-1 text-xs text-primary hover:text-primary/80 font-bold uppercase tracking-wider transition-colors hover:underline"
-                      >
+                      <div className="flex items-center gap-1 text-xs text-primary hover:text-primary/80 font-bold uppercase tracking-wider transition-colors hover:underline">
                         <span>Manage Client</span>
                         <ChevronRight className="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform" />
-                      </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
