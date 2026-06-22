@@ -683,7 +683,7 @@ export function ClientDetails({
                           <h3 className="text-lg font-bold text-foreground flex items-center gap-1.5">
                             {match.profile.firstName} {match.profile.lastName}
                             <span className="text-xs font-normal text-muted-foreground">
-                              -left-[31px] ({match.profile.age})
+                              ({match.profile.age})
                             </span>
                           </h3>
                           <p className="text-xs text-muted-foreground font-light flex items-center gap-1 mt-0.5">
@@ -712,7 +712,6 @@ export function ClientDetails({
                         </div>
 
                         <div className="flex items-center gap-1.5">
-                          -left-[31px]
                           <span className="text-2xl font-black text-primary tracking-tight">
                             {score}%
                           </span>
